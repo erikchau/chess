@@ -47,17 +47,17 @@ class Board
   end
   
   def dup
-      dup_board = Board.new
-    
-      @board.each_with_index do |row, row_index|
-        row.each_with_index do |piece, col_index|
-          next if self[row_index, col_index].nil?
-          dup_piece = piece.class.new(dup_board, [row_index, col_index], piece.color)
-          dup_board[row_index, col_index] = dup_piece
-        end
+    dup_board = Board.new
+  
+    @board.each_with_index do |row, row_index|
+      row.each_with_index do |piece, col_index|
+        next if self[row_index, col_index].nil?
+        dup_piece = piece.class.new(dup_board, [row_index, col_index], piece.color)
+        dup_board[row_index, col_index] = dup_piece
       end
-      dup_board
     end
+    dup_board
+  end
   
   # def move(start, end_pos)
 #     begin
@@ -104,7 +104,8 @@ class Board
   
   def checkmate?(color)
     return false unless in_check?(color)
-    get_pieces(color).all? { |piece| piece.valid_moves.empty? }
+    same_color = get_pieces(color)
+    p same_color.all? { |piece| piece.valid_moves.empty?}
 
   end
   
